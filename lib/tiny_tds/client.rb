@@ -1,19 +1,7 @@
 module TinyTds
   class Client
     
-    TDS_VERSIONS_SETTERS = {
-      'unknown' => 0,
-      '46'      => 1,
-      '100'     => 2,
-      '42'      => 3,
-      '70'      => 4,
-      '71'      => 5,
-      '80'      => 5,
-      '72'      => 6,
-      '90'      => 6
-    }.freeze
-    
-    TDS_VERSIONS_GETTERS = {
+    TDS_VERSIONS = {
       0  => {:name => 'DBTDS_UNKNOWN', :description => 'Unknown'},
       1  => {:name => 'DBTDS_2_0',     :description => 'Pre 4.0 SQL Server'},
       2  => {:name => 'DBTDS_3_4',     :description => 'Microsoft SQL Server (3.0)'},
@@ -63,7 +51,7 @@ module TinyTds
       raise ArgumentError, 'missing :host option if no :dataserver given' if opts[:dataserver].to_s.empty? && opts[:host].to_s.empty?
       @query_options = @@default_query_options.dup
       opts[:appname] ||= 'TinyTds'
-      opts[:tds_version] = TDS_VERSIONS_SETTERS[opts[:tds_version].to_s] || TDS_VERSIONS_SETTERS['71']
+      opts[:tds_version] = (opts[:tds_version] || '7.1').to_s
       opts[:login_timeout] ||= 60
       opts[:timeout] ||= 5
       opts[:encoding] = (opts[:encoding].nil? || opts[:encoding].downcase == 'utf8') ? 'UTF-8' : opts[:encoding].upcase
@@ -73,7 +61,7 @@ module TinyTds
     end
     
     def tds_version_info
-      info = TDS_VERSIONS_GETTERS[tds_version]
+      info = TDS_VERSIONS[tds_version]
       "#{info[:name]} - #{info[:description]}" if info
     end
 
