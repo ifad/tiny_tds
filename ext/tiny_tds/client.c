@@ -277,7 +277,7 @@ static VALUE rb_tinytds_connect(VALUE self, VALUE opts) {
   if (!NIL_P(app))
     dbsetlapp(cwrap->login, StringValuePtr(app));
   if (!NIL_P(version))
-    dbsetlversion(cwrap->login, NUM2INT(version));
+    setenv("TDSVER", StringValuePtr(version), 1);
   if (!NIL_P(ltimeout))
     dbsetlogintime(NUM2INT(ltimeout));
   if (!NIL_P(timeout))

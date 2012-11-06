@@ -77,6 +77,7 @@ module TinyTds
       { :dataserver    => ENV['TINYTDS_UNIT_DATASERVER'],
         :host          => ENV['TINYTDS_UNIT_HOST'],
         :port          => ENV['TINYTDS_UNIT_PORT'],
+        :tds_version   => ENV['TINYTDS_UNIT_VERSION'],
         :username      => username,
         :password      => password,
         :database      => 'tinytdstest',
